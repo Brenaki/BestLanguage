@@ -1,0 +1,1007 @@
+version: '3.8'
+
+services:
+  # C# (.NET) - 0.5 núcleo
+  api-csharp-05-250:
+    build: ./api-csharp
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 250M
+        reservations:
+          cpus: '0.5'
+          memory: 250M
+    ports:
+      - "3001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  api-csharp-05-500:
+    build: ./api-csharp
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+        reservations:
+          cpus: '0.5'
+          memory: 500M
+    ports:
+      - "3002:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  api-csharp-05-1g:
+    build: ./api-csharp
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    ports:
+      - "3003:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  # C# (.NET) - 1 núcleo
+  api-csharp-1-250:
+    build: ./api-csharp
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 250M
+        reservations:
+          cpus: '1.0'
+          memory: 250M
+    ports:
+      - "3004:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  api-csharp-1-500:
+    build: ./api-csharp
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+        reservations:
+          cpus: '1.0'
+          memory: 500M
+    ports:
+      - "3005:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  api-csharp-1-1g:
+    build: ./api-csharp
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    ports:
+      - "3006:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  # C# (.NET) - 2 núcleos
+  api-csharp-2-250:
+    build: ./api-csharp
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 250M
+        reservations:
+          cpus: '2.0'
+          memory: 250M
+    ports:
+      - "3007:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  api-csharp-2-500:
+    build: ./api-csharp
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 500M
+        reservations:
+          cpus: '2.0'
+          memory: 500M
+    ports:
+      - "3008:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  api-csharp-2-1g:
+    build: ./api-csharp
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+    ports:
+      - "3009:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+
+  # Go (Fiber) - 0.5 núcleo
+  api-fiber-05-250:
+    build: ./api-fiber
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 250M
+        reservations:
+          cpus: '0.5'
+          memory: 250M
+    ports:
+      - "3010:3000"
+
+  api-fiber-05-500:
+    build: ./api-fiber
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+        reservations:
+          cpus: '0.5'
+          memory: 500M
+    ports:
+      - "3011:3000"
+
+  api-fiber-05-1g:
+    build: ./api-fiber
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    ports:
+      - "3012:3000"
+
+  # Go (Fiber) - 1 núcleo
+  api-fiber-1-250:
+    build: ./api-fiber
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 250M
+        reservations:
+          cpus: '1.0'
+          memory: 250M
+    ports:
+      - "3013:3000"
+
+  api-fiber-1-500:
+    build: ./api-fiber
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+        reservations:
+          cpus: '1.0'
+          memory: 500M
+    ports:
+      - "3014:3000"
+
+  api-fiber-1-1g:
+    build: ./api-fiber
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    ports:
+      - "3015:3000"
+
+  # Go (Fiber) - 2 núcleos
+  api-fiber-2-250:
+    build: ./api-fiber
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 250M
+        reservations:
+          cpus: '2.0'
+          memory: 250M
+    ports:
+      - "3016:3000"
+
+  api-fiber-2-500:
+    build: ./api-fiber
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 500M
+        reservations:
+          cpus: '2.0'
+          memory: 500M
+    ports:
+      - "3017:3000"
+
+  api-fiber-2-1g:
+    build: ./api-fiber
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+    ports:
+      - "3018:3000"
+
+  # Python (Flask) - 0.5 núcleo
+  api-flask-05-250:
+    build: ./api-flask
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 250M
+        reservations:
+          cpus: '0.5'
+          memory: 250M
+    ports:
+      - "3019:3000"
+
+  api-flask-05-500:
+    build: ./api-flask
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+        reservations:
+          cpus: '0.5'
+          memory: 500M
+    ports:
+      - "3020:3000"
+
+  api-flask-05-1g:
+    build: ./api-flask
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    ports:
+      - "3021:3000"
+
+  # Python (Flask) - 1 núcleo
+  api-flask-1-250:
+    build: ./api-flask
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 250M
+        reservations:
+          cpus: '1.0'
+          memory: 250M
+    ports:
+      - "3022:3000"
+
+  api-flask-1-500:
+    build: ./api-flask
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+        reservations:
+          cpus: '1.0'
+          memory: 500M
+    ports:
+      - "3023:3000"
+
+  api-flask-1-1g:
+    build: ./api-flask
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    ports:
+      - "3024:3000"
+
+  # Python (Flask) - 2 núcleos
+  api-flask-2-250:
+    build: ./api-flask
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 250M
+        reservations:
+          cpus: '2.0'
+          memory: 250M
+    ports:
+      - "3025:3000"
+
+  api-flask-2-500:
+    build: ./api-flask
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 500M
+        reservations:
+          cpus: '2.0'
+          memory: 500M
+    ports:
+      - "3026:3000"
+
+  api-flask-2-1g:
+    build: ./api-flask
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+    ports:
+      - "3027:3000"
+
+  # JavaScript (NestJS) - 0.5 núcleo
+  api-javascript-05-250:
+    build: ./api-javascript
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 250M
+        reservations:
+          cpus: '0.5'
+          memory: 250M
+    ports:
+      - "3028:3000"
+
+  api-javascript-05-500:
+    build: ./api-javascript
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+        reservations:
+          cpus: '0.5'
+          memory: 500M
+    ports:
+      - "3029:3000"
+
+  api-javascript-05-1g:
+    build: ./api-javascript
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    ports:
+      - "3030:3000"
+
+  # JavaScript (NestJS) - 1 núcleo
+  api-javascript-1-250:
+    build: ./api-javascript
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 250M
+        reservations:
+          cpus: '1.0'
+          memory: 250M
+    ports:
+      - "3031:3000"
+
+  api-javascript-1-500:
+    build: ./api-javascript
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+        reservations:
+          cpus: '1.0'
+          memory: 500M
+    ports:
+      - "3032:3000"
+
+  api-javascript-1-1g:
+    build: ./api-javascript
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    ports:
+      - "3033:3000"
+
+  # JavaScript (NestJS) - 2 núcleos
+  api-javascript-2-250:
+    build: ./api-javascript
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 250M
+        reservations:
+          cpus: '2.0'
+          memory: 250M
+    ports:
+      - "3034:3000"
+
+  api-javascript-2-500:
+    build: ./api-javascript
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 500M
+        reservations:
+          cpus: '2.0'
+          memory: 500M
+    ports:
+      - "3035:3000"
+
+  api-javascript-2-1g:
+    build: ./api-javascript
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+    ports:
+      - "3036:3000"
+
+  # PHP (Laravel) - 0.5 núcleo
+  api-laravel-05-250:
+    build: ./api-laravel
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 250M
+        reservations:
+          cpus: '0.5'
+          memory: 250M
+    ports:
+      - "3037:80"
+
+  api-laravel-05-500:
+    build: ./api-laravel
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+        reservations:
+          cpus: '0.5'
+          memory: 500M
+    ports:
+      - "3038:80"
+
+  api-laravel-05-1g:
+    build: ./api-laravel
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    ports:
+      - "3039:80"
+
+  # PHP (Laravel) - 1 núcleo
+  api-laravel-1-250:
+    build: ./api-laravel
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 250M
+        reservations:
+          cpus: '1.0'
+          memory: 250M
+    ports:
+      - "3040:80"
+
+  api-laravel-1-500:
+    build: ./api-laravel
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+        reservations:
+          cpus: '1.0'
+          memory: 500M
+    ports:
+      - "3041:80"
+
+  api-laravel-1-1g:
+    build: ./api-laravel
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    ports:
+      - "3042:80"
+
+  # PHP (Laravel) - 2 núcleos
+  api-laravel-2-250:
+    build: ./api-laravel
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 250M
+        reservations:
+          cpus: '2.0'
+          memory: 250M
+    ports:
+      - "3043:80"
+
+  api-laravel-2-500:
+    build: ./api-laravel
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 500M
+        reservations:
+          cpus: '2.0'
+          memory: 500M
+    ports:
+      - "3044:80"
+
+  api-laravel-2-1g:
+    build: ./api-laravel
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+    ports:
+      - "3045:80"
+
+  # Ruby (Rails) - 0.5 núcleo
+  api-rails-05-250:
+    build: ./api-rails
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 250M
+        reservations:
+          cpus: '0.5'
+          memory: 250M
+    ports:
+      - "3046:80"
+    environment:
+      - RAILS_MASTER_KEY=dummy_key_for_testing
+
+  api-rails-05-500:
+    build: ./api-rails
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+        reservations:
+          cpus: '0.5'
+          memory: 500M
+    ports:
+      - "3047:80"
+    environment:
+      - RAILS_MASTER_KEY=dummy_key_for_testing
+
+  api-rails-05-1g:
+    build: ./api-rails
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    ports:
+      - "3048:80"
+    environment:
+      - RAILS_MASTER_KEY=dummy_key_for_testing
+
+  # Ruby (Rails) - 1 núcleo
+  api-rails-1-250:
+    build: ./api-rails
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 250M
+        reservations:
+          cpus: '1.0'
+          memory: 250M
+    ports:
+      - "3049:80"
+    environment:
+      - RAILS_MASTER_KEY=dummy_key_for_testing
+
+  api-rails-1-500:
+    build: ./api-rails
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+        reservations:
+          cpus: '1.0'
+          memory: 500M
+    ports:
+      - "3050:80"
+    environment:
+      - RAILS_MASTER_KEY=dummy_key_for_testing
+
+  api-rails-1-1g:
+    build: ./api-rails
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    ports:
+      - "3051:80"
+    environment:
+      - RAILS_MASTER_KEY=dummy_key_for_testing
+
+  # Ruby (Rails) - 2 núcleos
+  api-rails-2-250:
+    build: ./api-rails
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 250M
+        reservations:
+          cpus: '2.0'
+          memory: 250M
+    ports:
+      - "3052:80"
+    environment:
+      - RAILS_MASTER_KEY=dummy_key_for_testing
+
+  api-rails-2-500:
+    build: ./api-rails
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 500M
+        reservations:
+          cpus: '2.0'
+          memory: 500M
+    ports:
+      - "3053:80"
+    environment:
+      - RAILS_MASTER_KEY=dummy_key_for_testing
+
+  api-rails-2-1g:
+    build: ./api-rails
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+    ports:
+      - "3054:80"
+    environment:
+      - RAILS_MASTER_KEY=dummy_key_for_testing
+
+  # Rust (Actix-web) - 0.5 núcleo
+  api-rust-05-250:
+    build: ./api-rust
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 250M
+        reservations:
+          cpus: '0.5'
+          memory: 250M
+    ports:
+      - "3055:3000"
+
+  api-rust-05-500:
+    build: ./api-rust
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+        reservations:
+          cpus: '0.5'
+          memory: 500M
+    ports:
+      - "3056:3000"
+
+  api-rust-05-1g:
+    build: ./api-rust
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    ports:
+      - "3057:3000"
+
+  # Rust (Actix-web) - 1 núcleo
+  api-rust-1-250:
+    build: ./api-rust
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 250M
+        reservations:
+          cpus: '1.0'
+          memory: 250M
+    ports:
+      - "3058:3000"
+
+  api-rust-1-500:
+    build: ./api-rust
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+        reservations:
+          cpus: '1.0'
+          memory: 500M
+    ports:
+      - "3059:3000"
+
+  api-rust-1-1g:
+    build: ./api-rust
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    ports:
+      - "3060:3000"
+
+  # Rust (Actix-web) - 2 núcleos
+  api-rust-2-250:
+    build: ./api-rust
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 250M
+        reservations:
+          cpus: '2.0'
+          memory: 250M
+    ports:
+      - "3061:3000"
+
+  api-rust-2-500:
+    build: ./api-rust
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 500M
+        reservations:
+          cpus: '2.0'
+          memory: 500M
+    ports:
+      - "3062:3000"
+
+  api-rust-2-1g:
+    build: ./api-rust
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+    ports:
+      - "3063:3000"
+
+  # Java (Spring Boot) - 0.5 núcleo
+  api-spring-boot-05-250:
+    build: ./api-spring-boot
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 250M
+        reservations:
+          cpus: '0.5'
+          memory: 250M
+    ports:
+      - "3064:3000"
+
+  api-spring-boot-05-500:
+    build: ./api-spring-boot
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+        reservations:
+          cpus: '0.5'
+          memory: 500M
+    ports:
+      - "3065:3000"
+
+  api-spring-boot-05-1g:
+    build: ./api-spring-boot
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    ports:
+      - "3066:3000"
+
+  # Java (Spring Boot) - 1 núcleo
+  api-spring-boot-1-250:
+    build: ./api-spring-boot
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 250M
+        reservations:
+          cpus: '1.0'
+          memory: 250M
+    ports:
+      - "3067:3000"
+
+  api-spring-boot-1-500:
+    build: ./api-spring-boot
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+        reservations:
+          cpus: '1.0'
+          memory: 500M
+    ports:
+      - "3068:3000"
+
+  api-spring-boot-1-1g:
+    build: ./api-spring-boot
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    ports:
+      - "3069:3000"
+
+  # Java (Spring Boot) - 2 núcleos
+  api-spring-boot-2-250:
+    build: ./api-spring-boot
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 250M
+        reservations:
+          cpus: '2.0'
+          memory: 250M
+    ports:
+      - "3070:3000"
+
+  api-spring-boot-2-500:
+    build: ./api-spring-boot
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 500M
+        reservations:
+          cpus: '2.0'
+          memory: 500M
+    ports:
+      - "3071:3000"
+
+  api-spring-boot-2-1g:
+    build: ./api-spring-boot
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+    ports:
+      - "3072:3000"
