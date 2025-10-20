@@ -15,7 +15,7 @@ COPY pyproject.toml ./
 RUN pip install uv
 
 # Instalar dependências Python
-RUN uv sync --frozen
+RUN uv sync
 
 # Copiar código fonte
 COPY . .
