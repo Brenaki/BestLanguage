@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 import { AppService } from './app.service';
 import type { AppDto } from './app.dto';
 
@@ -7,7 +7,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post()
-  isPrime(data: {number: number}): AppDto {
+  @HttpCode(200)
+  isPrime(@Body() data: {number: number}): AppDto {
     return { is_prime: this.appService.isPrime(data.number) };
   }
 }
