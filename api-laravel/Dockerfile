@@ -5,6 +5,7 @@ FROM php:8.2-fpm-alpine
 RUN apk add --no-cache \
     nginx \
     sqlite \
+    sqlite-dev \
     curl \
     zip \
     unzip \
@@ -13,11 +14,18 @@ RUN apk add --no-cache \
     libjpeg-turbo-dev \
     freetype-dev \
     oniguruma-dev \
-    libxml2-dev
+    libxml2-dev \
+    libzip-dev
 
-# Instalar extensões PHP
+# Instalar extensões PHP uma por vez para melhor debugging
+RUN docker-php-ext-install pdo mbstring xml zip
+
+# Instalar extensão SQLite separadamente
+RUN docker-php-ext-install pdo_sqlite
+
+# Instalar extensão GD com configuração específica
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd pdo pdo_sqlite mbstring xml
+    && docker-php-ext-install gd
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -27,11 +35,14 @@ WORKDIR /var/www/html
 # Copiar arquivos de dependências
 COPY composer.json composer.lock ./
 
-# Instalar dependências PHP
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# Instalar dependências PHP (sem scripts para evitar problemas com artisan)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
 # Copiar código fonte
 COPY . .
+
+# Executar scripts do Composer após copiar todos os arquivos
+RUN composer run-script post-autoload-dump
 
 # Configurar permissões
 RUN chown -R www-data:www-data /var/www/html \
