@@ -1,0 +1,60 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: ./script.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 500 max VUs, 10m30s max duration (incl. graceful stop):
+              * fixed_iterations: 200 iterations for each of 500 VUs (maxDuration: 10m0s, gracefulStop: 30s)
+
+
+running (00m00.9s), 500/500 VUs, 16867 complete and 0 interrupted iterations
+fixed_iterations   [  17% ] 500 VUs  00m00.9s/10m0s  016867/100000 iters, 200 per VU
+
+running (00m02.0s), 500/500 VUs, 31296 complete and 0 interrupted iterations
+fixed_iterations   [  31% ] 500 VUs  00m02.0s/10m0s  031296/100000 iters, 200 per VU
+
+running (00m02.9s), 500/500 VUs, 49581 complete and 0 interrupted iterations
+fixed_iterations   [  50% ] 500 VUs  00m02.9s/10m0s  049581/100000 iters, 200 per VU
+
+running (00m03.9s), 500/500 VUs, 69244 complete and 0 interrupted iterations
+fixed_iterations   [  69% ] 500 VUs  00m03.9s/10m0s  069246/100000 iters, 200 per VU
+
+running (00m04.9s), 499/500 VUs, 86312 complete and 0 interrupted iterations
+fixed_iterations   [  86% ] 500 VUs  00m04.9s/10m0s  086312/100000 iters, 200 per VU
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 100000  17430.101246/s
+    checks_succeeded...: 100.00% 100000 out of 100000
+    checks_failed......: 0.00%   0 out of 100000
+
+    ✓ status is 200
+
+    HTTP
+    http_req_duration..............: avg=20.74ms min=76.51µs  med=17.69ms max=142.77ms p(90)=37.35ms p(95)=48.66ms
+      { expected_response:true }...: avg=20.74ms min=76.51µs  med=17.69ms max=142.77ms p(90)=37.35ms p(95)=48.66ms
+    http_req_failed................: 0.00%  0 out of 100000
+    http_reqs......................: 100000 17430.101246/s
+
+    EXECUTION
+    iteration_duration.............: avg=27.48ms min=118.53µs med=22.14ms max=165.55ms p(90)=53.41ms p(95)=66.6ms 
+    iterations.....................: 100000 17430.101246/s
+    vus............................: 499    min=499         max=500
+    vus_max........................: 500    min=500         max=500
+
+    NETWORK
+    data_received..................: 13 MB  2.2 MB/s
+    data_sent......................: 14 MB  2.4 MB/s
+
+
+
+
+running (00m05.7s), 000/500 VUs, 100000 complete and 0 interrupted iterations
+fixed_iterations ✓ [ 100% ] 500 VUs  00m05.7s/10m0s  100000/100000 iters, 200 per VU
