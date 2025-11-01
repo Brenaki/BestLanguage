@@ -1,31 +1,9 @@
 # Dockerfile para API PHP (Laravel)
-FROM php:8.2-fpm-alpine
+FROM php:8.4-fpm-alpine
+
 
 # Instalar dependências do sistema
-RUN apk add --no-cache \
-    nginx \
-    sqlite \
-    sqlite-dev \
-    curl \
-    zip \
-    unzip \
-    git \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    oniguruma-dev \
-    libxml2-dev \
-    libzip-dev
-
-# Instalar extensões PHP uma por vez para melhor debugging
-RUN docker-php-ext-install pdo mbstring xml zip
-
-# Instalar extensão SQLite separadamente
-RUN docker-php-ext-install pdo_sqlite
-
-# Instalar extensão GD com configuração específica
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd
+RUN apk add --no-cache nginx
 
 # Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -41,20 +19,15 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 # Copiar código fonte
 COPY . .
 
-# Executar scripts do Composer após copiar todos os arquivos
-RUN composer run-script post-autoload-dump
-
 # Configurar permissões
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /var/www/html
 
 # Configurar Nginx
 COPY <<EOF /etc/nginx/http.d/default.conf
 server {
     listen 80;
     server_name localhost;
-    root /var/www/html/public;
+    root /var/www/html/;
     index index.php;
 
     location / {

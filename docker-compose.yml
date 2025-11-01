@@ -509,8 +509,8 @@ services:
       - "3036:3000"
 
   # PHP (Laravel) - 0.5 núcleo
-  api-laravel-05-250:
-    build: ./api-laravel
+  api-php-05-250:
+    build: ./api-php
     deploy:
       resources:
         limits:
@@ -522,8 +522,8 @@ services:
     ports:
       - "3037:80"
 
-  api-laravel-05-500:
-    build: ./api-laravel
+  api-php-05-500:
+    build: ./api-php
     deploy:
       resources:
         limits:
@@ -535,8 +535,8 @@ services:
     ports:
       - "3038:80"
 
-  api-laravel-05-1g:
-    build: ./api-laravel
+  api-php-05-1g:
+    build: ./api-php
     deploy:
       resources:
         limits:
@@ -549,8 +549,8 @@ services:
       - "3039:80"
 
   # PHP (Laravel) - 1 núcleo
-  api-laravel-1-250:
-    build: ./api-laravel
+  api-php-1-250:
+    build: ./api-php
     deploy:
       resources:
         limits:
@@ -562,8 +562,8 @@ services:
     ports:
       - "3040:80"
 
-  api-laravel-1-500:
-    build: ./api-laravel
+  api-php-1-500:
+    build: ./api-php
     deploy:
       resources:
         limits:
@@ -575,8 +575,8 @@ services:
     ports:
       - "3041:80"
 
-  api-laravel-1-1g:
-    build: ./api-laravel
+  api-php-1-1g:
+    build: ./api-php
     deploy:
       resources:
         limits:
@@ -589,8 +589,8 @@ services:
       - "3042:80"
 
   # PHP (Laravel) - 2 núcleos
-  api-laravel-2-250:
-    build: ./api-laravel
+  api-php-2-250:
+    build: ./api-php
     deploy:
       resources:
         limits:
@@ -602,8 +602,8 @@ services:
     ports:
       - "3043:80"
 
-  api-laravel-2-500:
-    build: ./api-laravel
+  api-php-2-500:
+    build: ./api-php
     deploy:
       resources:
         limits:
@@ -615,8 +615,8 @@ services:
     ports:
       - "3044:80"
 
-  api-laravel-2-1g:
-    build: ./api-laravel
+  api-php-2-1g:
+    build: ./api-php
     deploy:
       resources:
         limits:
