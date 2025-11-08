@@ -1005,3 +1005,141 @@ services:
           memory: 1G
     ports:
       - "3072:3000"
+
+  # Scala (sem framework) - 0.5 núcleo
+  api-scala-05-250:
+    build: ./api-scala
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 250M
+        reservations:
+          cpus: '0.5'
+          memory: 250M
+    ports:
+      - "3073:3000"
+    environment:
+      - PORT=3000
+
+  api-scala-05-500:
+    build: ./api-scala
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 500M
+        reservations:
+          cpus: '0.5'
+          memory: 500M
+    ports:
+      - "3074:3000"
+    environment:
+      - PORT=3000
+
+  api-scala-05-1g:
+    build: ./api-scala
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    ports:
+      - "3075:3000"
+    environment:
+      - PORT=3000
+
+  # Scala (sem framework) - 1 núcleo
+  api-scala-1-250:
+    build: ./api-scala
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 250M
+        reservations:
+          cpus: '1.0'
+          memory: 250M
+    ports:
+      - "3076:3000"
+    environment:
+      - PORT=3000
+
+  api-scala-1-500:
+    build: ./api-scala
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 500M
+        reservations:
+          cpus: '1.0'
+          memory: 500M
+    ports:
+      - "3077:3000"
+    environment:
+      - PORT=3000
+
+  api-scala-1-1g:
+    build: ./api-scala
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '1.0'
+          memory: 1G
+    ports:
+      - "3078:3000"
+    environment:
+      - PORT=3000
+
+  # Scala (sem framework) - 2 núcleos
+  api-scala-2-250:
+    build: ./api-scala
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 250M
+        reservations:
+          cpus: '2.0'
+          memory: 250M
+    ports:
+      - "3079:3000"
+    environment:
+      - PORT=3000
+
+  api-scala-2-500:
+    build: ./api-scala
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 500M
+        reservations:
+          cpus: '2.0'
+          memory: 500M
+    ports:
+      - "3080:3000"
+    environment:
+      - PORT=3000
+
+  api-scala-2-1g:
+    build: ./api-scala
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+    ports:
+      - "3081:3000"
+    environment:
+      - PORT=3000
