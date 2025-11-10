@@ -16,31 +16,33 @@ O trabalho visa avaliar se o aluno consegue:
 
 ### Fatores Experimentais
 
-**Fator 1 (Numérico):** Tamanho de Memória RAM
-- 250MB
-- 500MB  
-- 1GB
-
-**Fator 2 (Não-Numérico):** Linguagens de Programação
+**Fator 1 (Não-Numérico):** Linguagens de Programação
 - C# (.NET)
 - Golang (Fiber)
 - Python (Flask)
 - JavaScript (Node.js/NestJS)
-- PHP (Laravel)
+- PHP
+- Laravel
 - Ruby (Rails)
 - Rust (Actix-web)
 - Java (Spring Boot)
+- Scala
 
-**Bloco:** Núcleos de CPU
+**Fator 2 (Numérico):** Núcleos de CPU
 - 0.5 núcleo
 - 1 núcleo
 - 2 núcleos
+
+**Bloco:** Memoria_RAM
+- 250MB
+- 500MB
+- 1000MB
 
 **Variável Resposta:** Tempo de resposta (milissegundos/segundos)
 
 ## 🏗️ Arquitetura do Projeto
 
-O projeto consiste em 8 APIs idênticas implementadas em diferentes linguagens de programação, todas realizando a mesma operação: **verificação de números primos**.
+O projeto consiste em 10 APIs idênticas implementadas em diferentes linguagens de programação, todas realizando a mesma operação: **verificação de números primos**.
 
 ### Estrutura das APIs
 
@@ -59,9 +61,11 @@ Cada API possui:
 | Python | Flask | `api-flask/` |
 | JavaScript | NestJS | `api-javascript/` |
 | PHP | Laravel | `api-laravel/` |
+| Laravel | Laravel | `api-laravel/` |
 | Ruby | Rails | `api-rails/` |
 | Rust | Actix-web | `api-rust/` |
 | Java | Spring Boot | `api-spring-boot/` |
+| Scala | Akka HTTP | `api-scala/` |
 
 ## 🚀 Como Executar
 
@@ -161,8 +165,8 @@ Esta metodologia foi a forma mais simples e científica de estudar as diferença
 #### Coleta de Dados
 
 1. **Configuração do Ambiente:**
-   - Configurar diferentes tamanhos de RAM (250MB, 500MB, 1GB)
    - Configurar diferentes números de núcleos de CPU (0.5, 1, 2)
+   - Configurar diferentes tamanhos de RAM (250MB, 500MB, 1000MB) como blocos
    - Executar cada API em cada configuração
    - Realizar 3 repetições por tratamento
 
@@ -173,16 +177,15 @@ Esta metodologia foi a forma mais simples e científica de estudar as diferença
 
 3. **Análise Estatística:**
    - Aplicar ANOVA no R usando o script `BestLanguage.R`
-   - Verificar significância dos fatores
+   - Verificar significância dos fatores e blocos
    - Analisar interações entre fatores
-   - Gerar 8 gráficos de regressão por linguagem
+   - Desdobrar interações significativas
 
 #### Arquivos de Análise
 
-- 📄 **`results_summary.csv`**: Contém todos os dados experimentais (216 observações)
-- 📊 **`BestLanguage.R`**: Script R que executa a ANOVA e gera os gráficos de regressão
+- 📄 **`results_summary.csv`**: Contém todos os dados experimentais (270 observações)
+- 📊 **`BestLanguage.R`**: Script R que executa a ANOVA em delineamento em blocos casualizados (DBC)
 - 📖 **`README_ANALISE.md`**: Guia completo de interpretação dos resultados estatísticos
-- 📈 **Gráficos gerados**: 8 gráficos mostrando o efeito dos núcleos em cada linguagem
 
 ---
 
@@ -213,8 +216,8 @@ This methodology was the simplest and most scientific way to study performance d
 #### Data Collection
 
 1. **Environment Setup:**
-   - Configure different RAM sizes (250MB, 500MB, 1GB)
    - Configure different CPU core counts (0.5, 1, 2)
+   - Configure different RAM sizes (250MB, 500MB, 1000MB) as blocks
    - Run each API in each configuration
    - Perform 3 repetitions per treatment
 
@@ -225,16 +228,15 @@ This methodology was the simplest and most scientific way to study performance d
 
 3. **Statistical Analysis:**
    - Apply ANOVA in R using the `BestLanguage.R` script
-   - Check significance of factors
+   - Check significance of factors and blocks
    - Analyze interactions between factors
-   - Generate 8 regression graphs per language
+   - Break down significant interactions
 
 #### Analysis Files
 
-- 📄 **`results_summary.csv`**: Contains all experimental data (216 observations)
-- 📊 **`BestLanguage.R`**: R script that executes ANOVA and generates regression graphs
+- 📄 **`results_summary.csv`**: Contains all experimental data (270 observations)
+- 📊 **`BestLanguage.R`**: R script that executes ANOVA in randomized complete block design (RCBD)
 - 📖 **`README_ANALISE.md`**: Complete guide to interpreting statistical results
-- 📈 **Generated Graphs**: 8 graphs showing the effect of cores on each language
 
 ---
 
@@ -244,7 +246,7 @@ This methodology was the simplest and most scientific way to study performance d
 
 ### Hipóteses Testadas
 
-1. **H0:** Não há diferença significativa entre os tamanhos de RAM
+1. **H0:** Não há diferença significativa entre os blocos
 2. **H0:** Não há diferença significativa entre as linguagens de programação  
 3. **H0:** Não há diferença significativa entre os números de núcleos de CPU
 4. **H0:** Não há interação significativa entre os fatores
@@ -296,16 +298,16 @@ BestLanguage/
 
 #### `results_summary.csv`
 Contém todos os dados coletados do experimento:
-- **Colunas**: Linguagem, Memoria_RAM, Nucleo, Media_tempo_de_resposta
-- **Observações**: 216 registros (8 linguagens × 3 RAM × 3 núcleos × 3 repetições)
+- **Colunas**: Linguagem, Nucleo, Memoria_RAM, Media_tempo_de_resposta
+- **Observações**: 270 registros (10 linguagens × 3 núcleos × 3 blocos de RAM × 3 repetições)
 - **Formato**: CSV com separador de vírgula
 
 #### `BestLanguage.R`
 Script R completo que realiza:
 1. Carrega os dados de `results_summary.csv`
-2. Executa análise de variância (ANOVA) fatorial 3 fatores
-3. Gera 8 gráficos de regressão mostrando o efeito dos núcleos em cada linguagem
-4. Plota modelos lineares e quadráticos para cada linguagem
+2. Executa análise de variância (ANOVA) fatorial 2 fatores em delineamento em blocos casualizados (DBC)
+3. Desdobra interações significativas
+4. Compara médias usando teste de Tukey
 
 **Para executar:**
 ```r
@@ -321,51 +323,43 @@ Guia completo de interpretação incluindo:
 - Análise de regressão para cada linguagem
 - Principais conclusões e recomendações práticas
 
-#### Gráficos Gerados
+#### Resultados da ANOVA
 
-Ao executar `BestLanguage.R`, são gerados **8 gráficos** (1 para cada linguagem):
-- **C#**: Modelo linear (R² = 0.9286)
-- **Java**: Modelo quadrático (R² = 1.0)
-- **JavaScript**: Modelo quadrático (R² = 1.0)
-- **PHP**: Modelo quadrático (R² = 1.0)
-- **Python**: Modelo quadrático (R² = 1.0)
-- **Ruby**: Modelo quadrático (R² = 1.0)
-- **Go**: Sem diferença significativa
-- **Rust**: Sem diferença significativa
-
-Cada gráfico mostra:
-- Pontos observados (médias por número de núcleos)
-- Curva de regressão linear (preto)
-- Curva de regressão quadrática (vermelho)
-- Equações dos modelos e coeficientes R²
+Ao executar `BestLanguage.R`, são gerados:
+- Tabela de ANOVA completa com teste F
+- Desdobramento da interação Linguagem × Núcleo
+- Comparação de médias por teste de Tukey
+- Análise do efeito dos núcleos dentro de cada linguagem
+- Teste de normalidade dos resíduos
 
 ## 📊 Resultados Principais / Main Results
 
 ### 🇧🇷 Português
 
 #### Resumo Estatístico
-- **Linguagens testadas**: 8 (C#, Go, Java, JavaScript, PHP, Python, Ruby, Rust)
-- **Total de observações**: 216
+- **Linguagens testadas**: 10 (C#, Go, Java, JavaScript, Laravel, PHP, Python, Ruby, Rust, Scala)
+- **Total de observações**: 270
 - **Repetições**: 3 por tratamento
-- **CV (Coeficiente de Variação)**: 9.36% (boa precisão)
+- **Delineamento**: Em Blocos Casualizados (DBC)
+- **CV (Coeficiente de Variação)**: 10.11% (boa precisão)
 
 #### Principais Descobertas
 
 1. **Rust é a linguagem mais rápida** (~0.021s), 34-40x mais rápido que a média
-2. **PHP é a mais lenta** (~4-5s com 0.5/1 núcleo), 100-200x mais lento que Rust
-3. **RAM não afeta significativamente** o desempenho (Pr>F = 0.2629)
-4. **Núcleos são importantes** para linguagens interpretadas (PHP, Python, Ruby)
-5. **Núcleos são irrelevantes** para linguagens compiladas (Rust, Go)
+2. **Laravel é a mais lenta** (~4-5s com 0.5/1 núcleo), 100-200x mais lento que Rust
+3. **Bloco (RAM) é significativo** (Pr>F = 0.049467), justificando o uso de DBC e indicando que a quantidade de RAM causa variação entre blocos
+4. **Núcleos são importantes** para linguagens interpretadas (Laravel, PHP, Python, Ruby, Java, JavaScript, C#)
+5. **Núcleos são irrelevantes** para linguagens compiladas (Rust, Go, Scala)
 
 #### Ranking de Performance
 
 🏆 **Top 3**: 
 1. Rust (~0.021s)
-2. Go (~0.10s)  
-3. C# (~0.12s)
+2. Scala (~0.05-0.09s com 2 núcleos)
+3. Go (~0.10s)
 
 ⚡ **Bottom 3**:
-1. PHP (~4-5s)
+1. Laravel (~4-5s com 0.5/1 núcleo, ~2.4s com 2 núcleos)
 2. Ruby (~2.6s → 0.5s com núcleos)
 3. Python (~1.2s → 0.45s com núcleos)
 
@@ -374,28 +368,29 @@ Para interpretação detalhada, consulte o arquivo **[`README_ANALISE.md`](READM
 ### 🇬🇧 English
 
 #### Statistical Summary
-- **Languages tested**: 8 (C#, Go, Java, JavaScript, PHP, Python, Ruby, Rust)
-- **Total observations**: 216
+- **Languages tested**: 10 (C#, Go, Java, JavaScript, Laravel, PHP, Python, Ruby, Rust, Scala)
+- **Total observations**: 270
 - **Repetitions**: 3 per treatment
-- **CV (Coefficient of Variation)**: 9.36% (good precision)
+- **Design**: Randomized Complete Block Design (RCBD)
+- **CV (Coefficient of Variation)**: 10.11% (good precision)
 
 #### Main Findings
 
 1. **Rust is the fastest language** (~0.021s), 34-40x faster than the mean
-2. **PHP is the slowest** (~4-5s with 0.5/1 core), 100-200x slower than Rust
-3. **RAM does not significantly affect** performance (Pr>F = 0.2629)
-4. **Cores matter** for interpreted languages (PHP, Python, Ruby)
-5. **Cores are irrelevant** for compiled languages (Rust, Go)
+2. **Laravel is the slowest** (~4-5s with 0.5/1 core), 100-200x slower than Rust
+3. **Block (RAM) is significant** (Pr>F = 0.049467), justifying the use of RCBD and indicating that RAM amount causes variation between blocks
+4. **Cores matter** for interpreted languages (Laravel, PHP, Python, Ruby, Java, JavaScript, C#)
+5. **Cores are irrelevant** for compiled languages (Rust, Go, Scala)
 
 #### Performance Ranking
 
 🏆 **Top 3**:
 1. Rust (~0.021s)
-2. Go (~0.10s)
-3. C# (~0.12s)
+2. Scala (~0.05-0.09s with 2 cores)
+3. Go (~0.10s)
 
 ⚡ **Bottom 3**:
-1. PHP (~4-5s)
+1. Laravel (~4-5s with 0.5/1 core, ~2.4s with 2 cores)
 2. Ruby (~2.6s → 0.5s with cores)
 3. Python (~1.2s → 0.45s with cores)
 
@@ -408,12 +403,12 @@ For detailed interpretation, see the file **[`README_ANALISE.md`](README_ANALISE
 ### 📖 Documentação Completa
 - **[`README_ANALISE.md`](README_ANALISE.md)**: Guia completo de interpretação dos resultados estatísticos
 - **[`BestLanguage.R`](BestLanguage.R)**: Script R com análise de variância completa
-- **[`results_summary.csv`](results_summary.csv)**: Dataset completo com 216 observações
+- **[`results_summary.csv`](results_summary.csv)**: Dataset completo com 270 observações
 
 ### 🔬 Metodologia
-- **Delineamento**: Fatorial 3 fatores em DIC (Delineamento Inteiramente Casualizado)
+- **Delineamento**: Fatorial 2 fatores em DBC (Delineamento em Blocos Casualizados)
 - **Análise**: ANOVA com testes F e Tukey para comparação de médias
-- **Regressão**: Modelos polinomiais lineares e quadráticos
+- **Desdobramento**: Análise de interações significativas
 - **Significância**: α = 0.05
 
 ### 📈 Como Reproduzir
@@ -425,7 +420,8 @@ source("BestLanguage.R")
 
 2. Analise os resultados:
    - Tabela de ANOVA será exibida no console
-   - 8 gráficos serão gerados mostrando regressão por linguagem
+   - Desdobramentos de interações significativas
+   - Comparações de médias por teste de Tukey
    - Consultar `README_ANALISE.md` para interpretação
 
 3. Explore os dados:
