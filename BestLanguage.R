@@ -8,149 +8,159 @@ str(results_summary)
 View(results_summary)
 
 # Executar análise de variância
-analise <- ExpDes.pt::fat3.dic(
-  fator1 = results_summary$Linguagem,
-  fator2 = results_summary$Memoria_RAM,
-  fator3 = results_summary$Nucleo,
-  resp = results_summary$Media_tempo_de_resposta,
-  quali = c(TRUE, FALSE, FALSE),
-  fac.names = c("Linguagem", "RAM", "Nucleo")
-)
+analise <- ExpDes.pt::fat2.dbc(results_summary$Linguagem,
+                               results_summary$Nucleo,
+                               results_summary$Memoria_RAM,
+                               results_summary$Media_tempo_de_resposta,
+                               quali = c(TRUE, TRUE),
+                               fac.names = c("Linguagem", "Nucleo"))
 
-# ========================================
+# ============================================================================
 # GRÁFICOS DE REGRESSÃO POR LINGUAGEM
-# ========================================
+# ============================================================================
 
-# Configurar parâmetros de plotagem
-par(mfrow = c(2, 4), mar = c(5, 4, 3, 2))
+# Calcular médias por linguagem e núcleo
+medias <- aggregate(Media_tempo_de_resposta ~ Linguagem + Nucleo, 
+                    data = results_summary, 
+                    FUN = mean)
 
-# ========================================
-# 1. C# - Modelo Linear
-# ========================================
-x_csharp <- c(0.5, 1, 2)
-m_csharp <- aggregate(Media_tempo_de_resposta ~ Nucleo, 
-                     data = results_summary[results_summary$Linguagem == "C#", ], 
-                     FUN = mean)$Media_tempo_de_resposta
+# Obter lista de linguagens únicas
+linguagens <- unique(results_summary$Linguagem)
 
-plot(x_csharp, m_csharp, xlab = "Núcleos", ylab = "Tempo (s)",
-     main = "C# - Núcleos X Tempo", pch = 19)
-# Modelo linear: Y = 0.3119 - 0.1023x
-curve(0.3119 - 0.1023*x, add = T)
-text(1.5, 0.25, "Y = 0.3119 - 0.1023x\nR² = 0.9286")
+# Criar diretório para gráficos se não existir
+if (!dir.exists("graficos")) {
+  dir.create("graficos")
+}
 
-# ========================================
-# 2. Java - Modelo Quadrático
-# ========================================
-x_java <- c(0.5, 1, 2)
-m_java <- aggregate(Media_tempo_de_resposta ~ Nucleo, 
-                   data = results_summary[results_summary$Linguagem == "Java", ], 
-                   FUN = mean)$Media_tempo_de_resposta
+# Função para gerar gráfico de regressão para uma linguagem
+gerar_grafico_regressao <- function(linguagem, dados_medias) {
+  # Filtrar dados da linguagem
+  dados_ling <- dados_medias[dados_medias$Linguagem == linguagem, ]
+  
+  # Ordenar por núcleo
+  dados_ling <- dados_ling[order(dados_ling$Nucleo), ]
+  
+  # Variáveis
+  x <- dados_ling$Nucleo
+  y <- dados_ling$Media_tempo_de_resposta
+  
+  # Ajustar modelos
+  modelo_linear <- lm(y ~ x)
+  modelo_quadratico <- lm(y ~ x + I(x^2))
+  modelo_cubico <- lm(y ~ x + I(x^2) + I(x^3))
+  
+  # Calcular R² para cada modelo
+  r2_linear <- summary(modelo_linear)$r.squared
+  r2_quadratico <- summary(modelo_quadratico)$r.squared
+  r2_cubico <- summary(modelo_cubico)$r.squared
+  
+  # Sequência para curva suave
+  x_seq <- seq(min(x), max(x), length.out = 100)
+  
+  # Previsões
+  pred_linear <- predict(modelo_linear, newdata = data.frame(x = x_seq))
+  pred_quadratico <- predict(modelo_quadratico, newdata = data.frame(x = x_seq))
+  pred_cubico <- predict(modelo_cubico, newdata = data.frame(x = x_seq))
+  
+  # Criar gráfico
+  png(filename = paste0("graficos/regressao_", gsub(" ", "_", linguagem), ".png"),
+      width = 1200, height = 800, res = 150)
+  
+  # Plotar pontos observados
+  plot(x, y, 
+       main = paste("Efeito dos Núcleos -", linguagem),
+       xlab = "Núcleos de CPU",
+       ylab = "Tempo Médio de Resposta (s)",
+       pch = 19,
+       cex = 1.5,
+       col = "black",
+       ylim = c(0, max(y) * 1.2))
+  
+  # Adicionar curvas de regressão
+  lines(x_seq, pred_linear, col = "blue", lwd = 2, lty = 1)
+  lines(x_seq, pred_quadratico, col = "red", lwd = 2, lty = 2)
+  lines(x_seq, pred_cubico, col = "green", lwd = 2, lty = 3)
+  
+  # Adicionar legenda
+  legend("topright",
+         legend = c("Pontos Observados",
+                   paste0("Linear (R² = ", round(r2_linear, 4), ")"),
+                   paste0("Quadrático (R² = ", round(r2_quadratico, 4), ")"),
+                   paste0("Cúbico (R² = ", round(r2_cubico, 4), ")")),
+         col = c("black", "blue", "red", "green"),
+         pch = c(19, NA, NA, NA),
+         lty = c(NA, 1, 2, 3),
+         lwd = c(NA, 2, 2, 2),
+         cex = 0.9)
+  
+  # Adicionar grid
+  grid(col = "gray90", lty = "dotted")
+  
+  # Adicionar equações no gráfico
+  coef_linear <- coef(modelo_linear)
+  coef_quad <- coef(modelo_quadratico)
+  coef_cub <- coef(modelo_cubico)
+  
+  # Texto com equações (posicionado no canto inferior esquerdo)
+  texto_equacoes <- paste0(
+    "Linear: y = ", round(coef_linear[1], 4), 
+    ifelse(coef_linear[2] >= 0, " + ", " - "), 
+    abs(round(coef_linear[2], 4)), "x\n",
+    "Quadrático: y = ", round(coef_quad[1], 4),
+    ifelse(coef_quad[2] >= 0, " + ", " - "),
+    abs(round(coef_quad[2], 4)), "x",
+    ifelse(coef_quad[3] >= 0, " + ", " - "),
+    abs(round(coef_quad[3], 4)), "x²\n",
+    "Cúbico: y = ", round(coef_cub[1], 4),
+    ifelse(coef_cub[2] >= 0, " + ", " - "),
+    abs(round(coef_cub[2], 4)), "x",
+    ifelse(coef_cub[3] >= 0, " + ", " - "),
+    abs(round(coef_cub[3], 4)), "x²",
+    ifelse(coef_cub[4] >= 0, " + ", " - "),
+    abs(round(coef_cub[4], 4)), "x³"
+  )
+  
+  text(x = min(x), 
+       y = max(y) * 0.15,
+       labels = texto_equacoes,
+       adj = c(0, 0),
+       cex = 0.7,
+       family = "mono",
+       col = "darkgray")
+  
+  dev.off()
+  
+  # Retornar resumo dos modelos
+  return(list(
+    linguagem = linguagem,
+    linear = list(modelo = modelo_linear, r2 = r2_linear),
+    quadratico = list(modelo = modelo_quadratico, r2 = r2_quadratico),
+    cubico = list(modelo = modelo_cubico, r2 = r2_cubico)
+  ))
+}
 
-plot(x_java, m_java, xlab = "Núcleos", ylab = "Tempo (s)",
-     main = "Java - Núcleos X Tempo", pch = 19)
-# Modelo linear
-curve(0.7844 - 0.3728*x, add = T)
-# Modelo quadrático: Y = 1.3361 - 1.5078x + 0.4414x²
-curve(1.3361 - 1.5078*x + 0.4414*x^2, add = T, col = 2)
-text(1.5, 0.6, "Y = 0.7844 - 0.3728x\nR² = 0.8382")
-text(1.5, 0.4, "Y = 1.3361 - 1.5078x + 0.4414x²\nR² = 1", col = 2)
+# Gerar gráficos para todas as linguagens
+resultados_modelos <- list()
 
-# ========================================
-# 3. JavaScript - Modelo Quadrático
-# ========================================
-x_js <- c(0.5, 1, 2)
-m_js <- aggregate(Media_tempo_de_resposta ~ Nucleo, 
-                 data = results_summary[results_summary$Linguagem == "JavaScript", ], 
-                 FUN = mean)$Media_tempo_de_resposta
+cat("\n=== Gerando gráficos de regressão ===\n")
+for (ling in linguagens) {
+  cat("Gerando gráfico para:", ling, "\n")
+  resultados_modelos[[ling]] <- gerar_grafico_regressao(ling, medias)
+}
 
-plot(x_js, m_js, xlab = "Núcleos", ylab = "Tempo (s)",
-     main = "JavaScript - Núcleos X Tempo", pch = 19)
-# Modelo linear
-curve(0.4874 - 0.2234*x, add = T)
-# Modelo quadrático: Y = 1.1056 - 1.4950x + 0.4945x²
-curve(1.1056 - 1.4950*x + 0.4945*x^2, add = T, col = 2)
-text(1.5, 0.4, "Y = 0.4874 - 0.2234x\nR² = 0.5971")
-text(1.5, 0.25, "Y = 1.1056 - 1.4950x + 0.4945x²\nR² = 1", col = 2)
+cat("\n=== Gráficos gerados com sucesso! ===\n")
+cat("Arquivos salvos em: graficos/\n\n")
 
-# ========================================
-# 4. PHP - Modelo Quadrático
-# ========================================
-x_php <- c(0.5, 1, 2)
-m_php <- aggregate(Media_tempo_de_resposta ~ Nucleo, 
-                  data = results_summary[results_summary$Linguagem == "PHP", ], 
-                  FUN = mean)$Media_tempo_de_resposta
-
-plot(x_php, m_php, xlab = "Núcleos", ylab = "Tempo (s)",
-     main = "PHP - Núcleos X Tempo", pch = 19)
-# Modelo linear
-curve(6.3067 - 1.8740*x, add = T)
-# Modelo quadrático: Y = 4.1307 + 2.6022x - 1.7407x²
-curve(4.1307 + 2.6022*x - 1.7407*x^2, add = T, col = 2)
-text(1.5, 4.5, "Y = 6.3067 - 1.8740x\nR² = 0.8938")
-text(1.5, 3.5, "Y = 4.1307 + 2.6022x - 1.7407x²\nR² = 1", col = 2)
-
-# ========================================
-# 5. Python - Modelo Quadrático
-# ========================================
-x_python <- c(0.5, 1, 2)
-m_python <- aggregate(Media_tempo_de_resposta ~ Nucleo, 
-                     data = results_summary[results_summary$Linguagem == "Python", ], 
-                     FUN = mean)$Media_tempo_de_resposta
-
-plot(x_python, m_python, xlab = "Núcleos", ylab = "Tempo (s)",
-     main = "Python - Núcleos X Tempo", pch = 19)
-# Modelo linear
-curve(1.2248 - 0.4390*x, add = T)
-# Modelo quadrático: Y = 2.4642 - 2.9887x + 0.9915x²
-curve(2.4642 - 2.9887*x + 0.9915*x^2, add = T, col = 2)
-text(1.5, 0.8, "Y = 1.2248 - 0.4390x\nR² = 0.5874")
-text(1.5, 0.5, "Y = 2.4642 - 2.9887x + 0.9915x²\nR² = 1", col = 2)
-
-# ========================================
-# 6. Ruby - Modelo Quadrático
-# ========================================
-x_ruby <- c(0.5, 1, 2)
-m_ruby <- aggregate(Media_tempo_de_resposta ~ Nucleo, 
-                   data = results_summary[results_summary$Linguagem == "Ruby", ], 
-                   FUN = mean)$Media_tempo_de_resposta
-
-plot(x_ruby, m_ruby, xlab = "Núcleos", ylab = "Tempo (s)",
-     main = "Ruby - Núcleos X Tempo", pch = 19)
-# Modelo linear
-curve(2.9069 - 1.3143*x, add = T)
-# Modelo quadrático: Y = 5.2741 - 6.1840x + 1.8938x²
-curve(5.2741 - 6.1840*x + 1.8938*x^2, add = T, col = 2)
-text(1.5, 2.2, "Y = 2.9069 - 1.3143x\nR² = 0.7776")
-text(1.5, 1.5, "Y = 5.2741 - 6.1840x + 1.8938x²\nR² = 1", col = 2)
-
-# ========================================
-# 7. Go - Sem regressão (sem diferença significativa)
-# ========================================
-x_go <- c(0.5, 1, 2)
-m_go <- aggregate(Media_tempo_de_resposta ~ Nucleo, 
-                data = results_summary[results_summary$Linguagem == "Go", ], 
-                FUN = mean)$Media_tempo_de_resposta
-
-plot(x_go, m_go, xlab = "Núcleos", ylab = "Tempo (s)",
-     main = "Go - Núcleos X Tempo", pch = 19)
-# Linha horizontal mostrando que não há diferença
-abline(h = mean(m_go), col = 2, lty = 2)
-text(1.5, max(m_go) + 0.02, "Sem diferença significativa", col = 2)
-
-# ========================================
-# 8. Rust - Sem regressão (sem diferença significativa)
-# ========================================
-x_rust <- c(0.5, 1, 2)
-m_rust <- aggregate(Media_tempo_de_resposta ~ Nucleo, 
-                   data = results_summary[results_summary$Linguagem == "Rust", ], 
-                   FUN = mean)$Media_tempo_de_resposta
-
-plot(x_rust, m_rust, xlab = "Núcleos", ylab = "Tempo (s)",
-     main = "Rust - Núcleos X Tempo", pch = 19)
-# Linha horizontal mostrando que não há diferença
-abline(h = mean(m_rust), col = 2, lty = 2)
-text(1.5, max(m_rust) + 0.002, "Sem diferença significativa", col = 2)
-
-# Retornar parâmetros de plotagem ao normal
-par(mfrow = c(1, 1))
+# Resumo dos R² por linguagem
+cat("=== Resumo dos Coeficientes de Determinação (R²) ===\n")
+cat(sprintf("%-15s %10s %12s %10s\n", "Linguagem", "Linear", "Quadrático", "Cúbico"))
+cat(paste(rep("-", 50), collapse = ""), "\n")
+for (ling in linguagens) {
+  r2_lin <- resultados_modelos[[ling]]$linear$r2
+  r2_quad <- resultados_modelos[[ling]]$quadratico$r2
+  r2_cub <- resultados_modelos[[ling]]$cubico$r2
+  cat(sprintf("%-15s %10.4f %12.4f %10.4f\n", 
+              ling, r2_lin, r2_quad, r2_cub))
+}
+cat("\n")
 
